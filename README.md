@@ -2,16 +2,16 @@
 
 ``` npm i ```
 
-# To run frontend
+### To run frontend
 
 ``` npm run dev ```
 
-# Create a .env file in the backend folder. In that add your mysql password and database name in this way-
+### Create a .env file in the backend folder. In that add your mysql password and database name in this way-
 
 PASSWORD= password
 
 DATABASE= database-name
 
-# To run backend
+### To run backend
 
 ``` node server.js ```
