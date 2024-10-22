@@ -1,4 +1,4 @@
-## Install all packages in frontend and backend folders by running this command in both-
+### Install all packages in frontend and backend folders by running this command in both-
 
 ``` npm i ```
 
