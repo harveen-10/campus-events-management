@@ -10,8 +10,8 @@ function Landing_pg() {
             <img src="http://res.cloudinary.com/do6otllrf/image/upload/v1718473466/yfgvfib9rhnw9fkyalp8.jpg" className='h-50 mx-10 '/>
             <div className='ml-40 text-center font-raleway'>
                 <div className='mt-16 font-black text-5xl'>
-                    <h1 className='mb-4'>SHOP</h1>
-                    <h1 className='mb-12'>SPHERE</h1>
+                    <h1 className='mb-4'>EVENT</h1>
+                    <h1 className='mb-12'>HIVE</h1>
                 </div>
                 <p>
                     Experience the joy of shopping from the comfort

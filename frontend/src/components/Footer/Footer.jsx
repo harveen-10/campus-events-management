@@ -8,7 +8,7 @@ function Footer() {
             <div className="md:flex md:justify-between">
                 <div className="mb-6 md:mb-0">
                         <img
-                            src="http://res.cloudinary.com/do6otllrf/image/upload/v1718473978/mqriuxg8bynnbr1quc2m.png"
+                            src="https://res.cloudinary.com/do6otllrf/image/upload/v1730903263/Group_7_bzq6qw.png"
                             className="mr-3 h-12"
                             alt="Logo"
                         />
