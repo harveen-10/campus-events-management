@@ -346,6 +346,9 @@ app.post("/register", async (req, res) => {
     const eventID = req.body.eventID;
     const participants = req.body.participants;
     const teamName = req.body.teamName;
+    console.log("eventID", eventID);
+    console.log("participants", participants);
+    console.log("teamName", teamName);
 
     if (!eventID || !participants || participants.length === 0) {
         return res.status(400).send("EventID and participant details are required.");

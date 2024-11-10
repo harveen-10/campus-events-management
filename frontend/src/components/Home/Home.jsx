@@ -1,15 +1,14 @@
-import React, {useState, useEffect} from 'react'
-import {Link, useLocation, useNavigate} from 'react-router-dom'
-import Component_home from '../Component_home/Component_home'
-import './Home.css'
+import React, { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import Component_home from '../Component_home/Component_home';
+import './Home.css';
 
 function Home() {
     const location = useLocation();
     const { currentUser } = location.state || {};
-
     const navigate = useNavigate();
 
-    const [eventdetails, seteventdetails]= useState([{
+    const [eventdetails, seteventdetails] = useState([{
         Ename: "",
         Event_date: "",
         Poster: "",
@@ -24,43 +23,39 @@ function Home() {
                 });
 
                 const data = await response.json();
-                console.log(data.products)
                 seteventdetails(data.products.map(event => ({
                     Ename: event.Ename,
                     Event_date: event.Event_date,
                     Poster: event.Poster,
                     EventID: event.EventID
                 })));
-
             } catch (error) {
                 console.error('Error fetching data: ', error);
             }
-        }
+        };
 
         fetchData();
-
     }, []);
 
-    const handleNavigate = (event) => {
-        const newUser = {eventID: event.EventID, srn: currentUser.srn}; 
-        console.log("Navigating with newUser: ", newUser);
-
-        // Navigate to the EventDetails page and pass the currentUser as state
+    const handleNavigateToDetails = (eventID) => {
+        const newUser = { eventID, srn: currentUser.srn };
         navigate("/event_details", { state: { newUser } });
-    }
+    };
+
+    const handleRegister = (eventID) => {
+        const event = { eventID };
+        navigate("/register", { state: { event } });
+    };
 
     const handleCreateEvent = () => {
-        // Navigate to the "Create New Event" page
         navigate("/create_event");
     };
 
     const handleOrganizeEvent = () => {
-        // Navigate to the "Organize an Existing Event" page
         navigate("/organize_event");
     };
 
     const handleEventDetails = () => {
-        // Navigate to the "Event Details" page
         navigate("/event_details");
     };
    
@@ -87,25 +82,20 @@ function Home() {
                 </button>
             </div>
 
-
-
-
             {eventdetails.length === 0 ? (
                 <h1 className='font-raleway font-black text-3xl mt-40'>No events available</h1>
             ) : (
                 <div className="flex-container">
                     {eventdetails.map(event => (
-                        <div 
+                        <Component_home 
                             key={event.EventID}
-                            className="event-card cursor-pointer"
-                            onClick={() => handleNavigate(event)}
-                        >
-                            <Component_home 
-                                imgSrc={event.Poster} 
-                                name={event.Ename} 
-                                date={new Date(event.Event_date).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
-                            />
-                        </div>
+                            imgSrc={event.Poster} 
+                            name={event.Ename} 
+                            date={new Date(event.Event_date).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
+                            eventID={event.EventID}
+                            handleNavigateToDetails={() => handleNavigateToDetails(event.EventID)}
+                            handleRegister={() => handleRegister(event.EventID)}
+                        />
                     ))}
                 </div>
             )}
@@ -113,4 +103,4 @@ function Home() {
     );
 }
 
-export default Home
+export default Home;
