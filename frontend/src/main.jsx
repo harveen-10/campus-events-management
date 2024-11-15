@@ -8,6 +8,9 @@ import Event_details from './components/Event_details/Event_details.jsx'
 import Create_event from './components/Create_event/Create_event.jsx'
 import Organize_event from './components/Organize_event/Organize_event.jsx'
 import Register from './components/Register/Register.jsx'
+import Event_info from './components/Event_info/Event_info.jsx'
+import InsertPage from './components/InsertPage/InsertPage.jsx'
+import UpdatePage from './components/UpdatePage/UpdatePage.jsx'
 import Layout from './layout.jsx'
 import './index.css'
 import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom'
@@ -23,6 +26,9 @@ const router = createBrowserRouter(
         <Route path='create_event' element={<Create_event/>}/>
         <Route path='organize_event' element={<Organize_event/>}/>
         <Route path='register' element={<Register/>}/>
+        <Route path='event_info' element={<Event_info/>}/>
+        <Route path='insert' element={<InsertPage/>}/>
+        <Route path='update' element={<UpdatePage/>}/>
     </Route>
   )
 )

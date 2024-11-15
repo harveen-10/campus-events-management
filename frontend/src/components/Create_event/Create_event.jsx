@@ -1,15 +1,18 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 function Create_event() {
+    const location = useLocation();
+    const { srn } = location.state || {};
+    console.log(srn);
     const navigate = useNavigate();
 
     // State for form data
     const [eventData, setEventData] = useState({
         ename: '',
-        category: '', // Will store the selected category
+        category: '',
         event_date: '',
-        domain: '', // Will store the selected domain
+        domain: '', 
         poster: '',
         s_time: '',
         e_time: '',
@@ -52,8 +55,9 @@ function Create_event() {
 
             // Optionally, navigate back after a short delay
             setTimeout(() => {
-                navigate('/home'); // Navigate back to the home page
-            }, 3000); // Delay to allow user to read the message
+                const currentUser={ srn: srn.srn };
+                navigate("/home", { state: { currentUser } });
+            }, 5000); // Delay to allow user to read the message
 
         } catch (err) {
             console.error('Error during event creation:', err);
@@ -62,6 +66,17 @@ function Create_event() {
     };
 
     return (
+        <>
+        <button
+            onClick={() => {
+                const currentUser = { srn: srn.srn };
+                navigate("/home", { state: { currentUser } });
+            }}
+            className="self-start mb-4 text-indigo-500 underline"
+        >
+            Back to Home
+        </button>
+
         <div className="flex flex-col items-center min-h-screen p-4">
             <h1 className="text-3xl font-semibold mb-6">Create New Event</h1>
             
@@ -230,6 +245,7 @@ function Create_event() {
                 </div>
             )}
         </div>
+        </>
     );
 }
 

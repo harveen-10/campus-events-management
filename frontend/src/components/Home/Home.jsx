@@ -6,6 +6,7 @@ import './Home.css';
 function Home() {
     const location = useLocation();
     const { currentUser } = location.state || {};
+    console.log(currentUser)
     const navigate = useNavigate();
 
     const [eventdetails, seteventdetails] = useState([{
@@ -43,20 +44,23 @@ function Home() {
     };
 
     const handleRegister = (eventID) => {
-        const event = { eventID };
-        navigate("/register", { state: { event } });
+        const newUser = { eventID, srn: currentUser.srn };
+        navigate("/register", { state: { newUser } });
     };
 
     const handleCreateEvent = () => {
-        navigate("/create_event");
+        const srn = { srn: currentUser.srn };
+        navigate("/create_event", { state: { srn } });
     };
 
     const handleOrganizeEvent = () => {
-        navigate("/organize_event");
+        const srn = { srn: currentUser.srn };
+        navigate("/organize_event", { state: { srn } });
     };
 
     const handleEventDetails = () => {
-        navigate("/event_details");
+        const srn = { srn: currentUser.srn };
+        navigate("/event_info", { state: { srn } });
     };
    
     return (

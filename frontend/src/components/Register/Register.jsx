@@ -3,10 +3,9 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 function Register() {
     const location = useLocation();
-    const { event } = location.state || {};
-    const eventID = event.eventID;
-    console.log("eventID in register", event);
-    console.log("eventID in register", event.eventID);
+    const { newUser } = location.state || {};
+    console.log(newUser);
+    const eventID = newUser.eventID;
     const navigate = useNavigate();
 
     const [teamSize, setTeamSize] = useState(1);
@@ -17,12 +16,9 @@ function Register() {
 
     // Fetch teamSize based on eventID
     useEffect(() => {
-        console.log("eventID in register useeffect", event);
-        console.log("eventID in register useeffect", event.eventID);
-
         const fetchData = async () => {
             try {
-                const response = await fetch(`http://localhost:3000/eventdetails?eventId=${event.eventID}`, {
+                const response = await fetch(`http://localhost:3000/eventdetails?eventId=${eventID}`, {
                     method: "GET",
                     headers: {
                         'Content-Type': "application/json",
@@ -48,7 +44,7 @@ function Register() {
         };
 
         fetchData();
-    }, [event.eventID]);
+    }, [eventID]);
 
     const handleInputChange = (index, field, value) => {
         setParticipants(prevParticipants => {
@@ -82,7 +78,8 @@ function Register() {
 
             // After 3 seconds, navigate to the home page
             setTimeout(() => {
-                navigate('/home');
+                const currentUser={ srn: newUser.srn };
+                navigate("/home", { state: { currentUser } });
             }, 3000); // 3 seconds delay
         } catch (err) {
             console.error("Error during registration:", err);
@@ -91,6 +88,18 @@ function Register() {
     };
 
     return (
+        <>
+        <button
+            onClick={() => {
+                const currentUser = { srn: newUser.srn };
+                navigate("/home", { state: { currentUser } });
+            }}
+            className="self-start mb-4 text-indigo-500 underline"
+        >
+            Back to Home
+        </button>
+
+
         <div className="max-w-lg mx-auto mt-8 p-6 bg-white rounded-lg shadow-md">
             <h1 className="text-2xl font-semibold text-center mb-4">Register for Event</h1>
             {error && <p className="text-red-500 text-center mb-4">{error}</p>}
@@ -169,6 +178,7 @@ function Register() {
                 Register
             </button>
         </div>
+        </>
     );
 }
 

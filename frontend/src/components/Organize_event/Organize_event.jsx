@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 function Organize_event() {
+    const location = useLocation();
+    const { srn } = location.state || {};
+    console.log(srn);
+    const navigate = useNavigate();
+
     const [organizerDetails, setOrganizerDetails] = useState({
         srn: '',
         ename: '',
@@ -12,7 +17,6 @@ function Organize_event() {
     });
     const [events, setEvents] = useState([]); // Ensure events is an array initially
     const [message, setMessage] = useState('');
-    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchEvents = async () => {
@@ -69,7 +73,8 @@ function Organize_event() {
     
             if (response.ok) {
                 setTimeout(() => {
-                    navigate('/home');
+                    const currentUser={ srn: srn.srn };
+                    navigate("/home", { state: { currentUser } });
                 }, 3000);
             }
         } catch (error) {
@@ -82,7 +87,10 @@ function Organize_event() {
     return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
             <button
-                onClick={() => navigate('/home')}
+                onClick={() => {
+                    const currentUser = { srn: srn.srn };
+                    navigate("/home", { state: { currentUser } });
+                }}
                 className="self-start mb-4 text-indigo-500 underline"
             >
                 Back to Home

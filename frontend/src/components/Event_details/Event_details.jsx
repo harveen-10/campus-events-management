@@ -4,6 +4,7 @@ import {Link, useLocation, useNavigate} from 'react-router-dom'
 function Event_details() {
     const location = useLocation();
     const { newUser } = location.state || {};
+    console.log(newUser);
     const navigate = useNavigate();
     console.log("Current User in Event_details: ", newUser);
 
@@ -76,6 +77,10 @@ function Event_details() {
     const startTimeFormatted = formatTime(eventDetails.S_time);
     const endTimeFormatted = formatTime(eventDetails.E_time);
 
+    const handleRegister = () => {
+        navigate("/register", { state: { newUser } });
+    };
+
 
     return <>
         <div className="flex flex-col items-center p-4">
@@ -102,12 +107,12 @@ function Event_details() {
                 <p className="text-xl"><strong>Team Size:</strong> {eventDetails.TeamSize}</p>
             </div>
             <div className="mt-8 w-full flex justify-end">
-                    <button
+                <button
                         className="py-2 px-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
-                        onClick={() => console.log('Register clicked')}
+                        onClick={handleRegister}
                     >
-                        Register
-                    </button>
+                    Register
+                </button>
                 </div>
 
         </div>
