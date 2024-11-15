@@ -48,6 +48,7 @@ function Create_event() {
             }
 
             const data = await response.json();
+            console.log(data);
 
             // Display the popup message with the ecode
             setMessage(`The event has been created. And this is the Event code ${data.ecode}. Please enter it for organizing the event.`);
@@ -61,7 +62,7 @@ function Create_event() {
 
         } catch (err) {
             console.error('Error during event creation:', err);
-            setMessage('An error occurred during event creation.');
+            setMessage('A similar event already exists at that time.');
         }
     };
 

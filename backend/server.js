@@ -410,25 +410,35 @@ app.post("/newevent", async (req, res) => {
     const e_time = req.body.e_time;
     const teamSize = req.body.teamSize;
 
+    // Validate required fields
     if (!ename || !category || !event_date || !domain || !poster || !s_time || !e_time || !teamSize) {
         return res.status(400).send("All fields are required.");
     }
 
     try {
-        // Call the stored procedure to insert the new event and generate EventID and ecode
-        await db.query("CALL insertNewEvent(?, ?, ?, ?, ?, ?, ?, ?, @EventID, @ecode);", 
-            [ename, category, event_date, domain, poster, s_time, e_time, teamSize]);
+        // Call the stored procedure
+        await db.query(
+            "CALL insertNewEvent(?, ?, ?, ?, ?, ?, ?, ?, @EventID, @ecode);",
+            [ename, category, event_date, domain, poster, s_time, e_time, teamSize]
+        );
 
         // Fetch the generated EventID and ecode
         const [rows] = await db.query("SELECT @EventID AS EventID, @ecode AS ecode;");
 
-        // Return the EventID and ecode to the user
+        // Return success response
         return res.json({
             EventID: rows[0].EventID,
-            ecode: rows[0].ecode
+            ecode: rows[0].ecode,
         });
     } catch (err) {
-        console.error("Error during event creation: ", err);
+        // Handle MySQL SIGNAL errors
+        if (err.code === "ER_SIGNAL_EXCEPTION") {
+            console.error("Procedure error:", err.message);
+            return res.status(400).send(err.message); // Return the error message from the procedure
+        }
+
+        // Handle unexpected errors
+        console.error("Error during event creation:", err);
         return res.status(500).send("An error occurred during event creation.");
     }
 });
